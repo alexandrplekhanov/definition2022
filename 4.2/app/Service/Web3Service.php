@@ -11,7 +11,7 @@ class Web3Service
 
     public function __construct()
     {
-        $abi = file_get_contents('C:\OpenServer\domains\hack2022\definition2022\4.2\app\Service\ReNft.json');
+        $abi = file_get_contents(__DIR__ . '/ReNft.json');
         $this->web3 = new Web3('https://ropsten.infura.io/v3/566ef03177b8440dbb622e3b63005d0e');
         $this->contract = new Contract('https://ropsten.infura.io/v3/566ef03177b8440dbb622e3b63005d0e', $abi);
     }
