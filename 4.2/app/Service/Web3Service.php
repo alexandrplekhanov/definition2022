@@ -18,7 +18,7 @@ class Web3Service
 
     public function getEvt()
     {
-        return $this->contract->getEventLogs('Rent', 10, 'latest');
+        return $this->contract->getEventLogs('Rent', 1, 'latest');
     }
 
 }

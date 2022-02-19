@@ -19,5 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/get-smth', [TestController::class,'get']);
+
+Route::middleware('request.auth')->group(function(){
+    Route::get('/get-smth', [TestController::class,'get']);
+});
+
 
