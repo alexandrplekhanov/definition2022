@@ -29,7 +29,7 @@ Route::middleware('request.auth')->group(function () {
 // Analytics collect
 Route::get('/analytics/login', [AnalyticsController::class, 'login']);
 Route::get('/analytics/create_nft', [AnalyticsController::class, 'create_nft']);
-Route::get('/analytics/up_for_rent', [AnalyticsController::class, 'up_for_rent']);
+Route::post('/analytics/up_for_rent', [AnalyticsController::class, 'up_for_rent']);
 Route::get('/analytics/remove_from_rent', [AnalyticsController::class, 'remove_from_rent']);
 Route::get('/analytics/rented', [AnalyticsController::class, 'rented']);
 Route::get('/analytics/rent_end', [AnalyticsController::class, 'rent_end']);

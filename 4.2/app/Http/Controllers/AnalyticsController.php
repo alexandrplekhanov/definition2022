@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service\AnalyticsCollectService;
 use App\Service\AnalyticsGetService;
+use Illuminate\Http\Request;
 
 class AnalyticsController extends Controller
 {
@@ -41,39 +42,54 @@ class AnalyticsController extends Controller
         }
     }
 
-    public function upForRent()
+    // [nft_id price duration]
+    public function upForRent(Request $request)
     {
         try {
-
+            $result = $this->analyticsCollectService->upForRent($request->post());
+            return response()->json($result);
         } catch (\Throwable $e) {
-
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
-    public function removeFromRent()
+    // [nft_id]
+    public function removeFromRent(Request $request)
     {
         try {
-
+            $result = $this->analyticsCollectService->removeFromRent($request->post());
+            return response()->json($result);
         } catch (\Throwable $e) {
-
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
-    public function rented()
+    // [nft_id. ]
+    public function rented(Request $request)
     {
         try {
-
+            $result = $this->analyticsCollectService->rented($request->post());
+            return response()->json($result);
         } catch (\Throwable $e) {
-
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
-    public function rentEnd()
+    public function rentEnd(Request $request)
     {
         try {
-
+            $result = $this->analyticsCollectService->rentEnd($request->post());
+            return $result;
         } catch (\Throwable $e) {
-
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
@@ -81,10 +97,11 @@ class AnalyticsController extends Controller
     {
         try {
             $publicKey = request()->get('public_key');
-
             return $this->analyticsGetService->getAnalytics($publicKey);
         } catch (\Throwable $e) {
-            dd($e->__toString());
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 }
