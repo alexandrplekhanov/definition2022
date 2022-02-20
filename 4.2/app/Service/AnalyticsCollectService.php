@@ -11,6 +11,10 @@ class AnalyticsCollectService
 {
     public function login()
     {
+        if (User::where('public_key', request()->bearerToken())->first()) {
+            return true;
+        }
+
         $inputData = [
             'public_key' => request()->get('public_key'),
         ];
@@ -27,7 +31,13 @@ class AnalyticsCollectService
     {
         $time = time();
 
-        $user = User::where('public_key', request()->get('public_key'))->first();
+        if (!$user = User::where('public_key', request()->get('public_key'))->first()) {
+            $inputData = [
+                'public_key' => request()->get('public_key'),
+            ];
+
+            $user = User::create($inputData);
+        }
 
         $nftData = [
             'status' => Nft::STATUS_CREATE,
