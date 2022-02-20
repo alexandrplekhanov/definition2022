@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\DTO\CreateOrderItemsModelDto;
+use App\DTO\CreateUserModelDto;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,4 +44,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function create(array $inputData)
+    {
+        $user = new User($inputData);
+
+        if ($user->save()) {
+            return $user;
+        }
+
+        return false;
+    }
 }

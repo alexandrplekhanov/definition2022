@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\AnalyticsCollectService;
 use App\Service\AnalyticsGetService;
 
 class AnalyticsController extends Controller
@@ -10,20 +11,22 @@ class AnalyticsController extends Controller
     private AnalyticsGetService $analyticsGetService;
 
     public function __constructor(
-        AnalyticsGetService $analyticsService,
+        AnalyticsCollectService $analyticsCollectService,
         AnalyticsGetService $analyticsGetService
     )
     {
-        $this->analyticsService = $analyticsService;
+        $this->analyticsCollectService = $analyticsCollectService;
         $this->analyticsGetService = $analyticsGetService;
     }
 
     public function login()
     {
         try {
-            $publicKey = request()->get('public_key');
+            $inputData = [
+                'public_key' => request()->get('public_key'),
+            ];
 
-            return $this->analyticsService->login($publicKey);
+            return $this->analyticsCollectService->login($inputData);
         } catch (\Throwable $e) {
 
         }
@@ -32,9 +35,7 @@ class AnalyticsController extends Controller
     public function createNft()
     {
         try {
-            $publicKey = request()->get('public_key');
-
-            return $this->analyticsService->login($publicKey);
+            return $this->analyticsCollectService->createNft();
         } catch (\Throwable $e) {
 
         }
@@ -76,12 +77,12 @@ class AnalyticsController extends Controller
         }
     }
 
-    public function getMetrics(AnalyticsGetService $analyticsService)
+    public function getMetrics()
     {
         try {
             $publicKey = request()->get('public_key');
 
-            return $analyticsService->getAnalytics($publicKey);
+            return $this->analyticsGetService->getAnalytics($publicKey);
         } catch (\Throwable $e) {
             dd($e->__toString());
         }
