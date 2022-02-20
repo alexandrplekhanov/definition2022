@@ -11,7 +11,7 @@ class AnalyticsController extends Controller
     private AnalyticsCollectService $analyticsCollectService;
     private AnalyticsGetService $analyticsGetService;
 
-    public function __constructor(
+    public function __construct(
         AnalyticsCollectService $analyticsCollectService,
         AnalyticsGetService $analyticsGetService
     )
@@ -27,9 +27,11 @@ class AnalyticsController extends Controller
                 'public_key' => request()->get('public_key'),
             ];
 
-            return $this->analyticsCollectService->login($inputData);
+            return $this->analyticsCollectService->login();
         } catch (\Throwable $e) {
-
+            return response()->json([
+                'error' => $e->__toString(),
+            ]);
         }
     }
 
@@ -38,7 +40,9 @@ class AnalyticsController extends Controller
         try {
             return $this->analyticsCollectService->createNft();
         } catch (\Throwable $e) {
-
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
@@ -68,7 +72,7 @@ class AnalyticsController extends Controller
         }
     }
 
-    // [nft_id. ]
+    // [nft_id]
     public function rented(Request $request)
     {
         try {

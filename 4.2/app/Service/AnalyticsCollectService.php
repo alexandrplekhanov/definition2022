@@ -16,10 +16,10 @@ class AnalyticsCollectService
         }
 
         $inputData = [
-            'public_key' => request()->get('public_key'),
+            'public_key' => request()->bearerToken(),
         ];
 
-        return User::create($inputData);
+        return response()->json(User::create($inputData));
     }
 
     //'status'
@@ -31,9 +31,9 @@ class AnalyticsCollectService
     {
         $time = time();
 
-        if (!$user = User::where('public_key', request()->get('public_key'))->first()) {
+        if (!$user = User::where('public_key', request()->bearerToken())->first()) {
             $inputData = [
-                'public_key' => request()->get('public_key'),
+                'public_key' => request()->bearerToken(),
             ];
 
             $user = User::create($inputData);
